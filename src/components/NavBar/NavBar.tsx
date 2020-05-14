@@ -7,6 +7,6 @@ interface NavBarProps {
 export default class NavBar extends React.Component<NavBarProps> {
 
     render() {
-        return this.props.isSignedIn ? (<div>NavBar component loaded!</div>) : null
+        return <div>NavBar component loaded!</div>
     }
 }

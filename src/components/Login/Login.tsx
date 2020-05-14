@@ -1,58 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form, FormGroup, FormLabel, FormControl, FormText } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
+
+import { useSignIn } from '../../util/auth/auth-service'
 import './Login.css'
+import { useDispatch, useSelector } from 'react-redux';
+import State from '../../types/reduxState';
 
-interface LoginProps {}
+const Login = () => {
 
-interface LoginState {
-    isSignedIn: boolean
-}
+    const [usernameInvalid, setUsernameInvalid] = useState(false)
+    const [passwordInvalid, setPasswordInvalid] = useState(false)
+    const isSignedIn: boolean = useSelector((state: State) => state.isSignedIn)
+    const dispatch = useDispatch()
 
-export default class Login extends React.Component<LoginProps, LoginState> {
-
-    constructor(props: LoginProps) {
-        super(props)
-        this.state = {
-            isSignedIn: false
-        }
-    }
-
-    handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+    const useHandleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault()
         let target = event.currentTarget
-        if (target.formUsername.value === "admin" && target.formPassword.value === "admin") {
-            this.setState({
-                isSignedIn: true
-            })
+        let signedIn = useSignIn(target.formUsername.value, target.formPassword.value, dispatch)
+        if (signedIn) {
+            //ToDo change to redux
+            setUsernameInvalid(false)
+            setPasswordInvalid(false)
+        } else {
+            setUsernameInvalid(true)
+            setPasswordInvalid(true)
         }
     }
 
-    render() {
-
-        if (this.state.isSignedIn) {
-            return <Redirect to="/welcome" />
-        }
-
-        return (
-            <div className="p-1 loginFormContainer">
-                <Form className="form-login" onSubmit={this.handleSubmit.bind(this)}>
-                    <FormText className="signinLabel">Please sign in</FormText>
-                    <FormGroup controlId="formUsername">
-                        <FormLabel className="sr-only">
-                            Username
-                        </FormLabel>
-                        <FormControl size="lg" type="username" placeholder="Enter username"/>
-                    </FormGroup>
-                    <FormGroup controlId="formPassword">
-                        <FormLabel className="sr-only">
-                            Password
-                        </FormLabel>
-                        <FormControl size="lg" type="password" placeholder="Enter password"/>
-                    </FormGroup>
-                    <Button size="lg" variant="dark" className="loginButton" type="submit">Sign in</Button>
-                </Form>
-            </div>
-        )
-    }
+    return (
+        <div className="p-1 loginFormContainer">
+            {isSignedIn ? <Redirect to="/welcome" /> : <br/>}
+            <Form className="form-login" onSubmit={useHandleSubmit}>
+                <FormText className="signinLabel">Please sign in</FormText>
+                <FormGroup controlId="formUsername" >
+                    <FormLabel className="sr-only">
+                        Username
+                    </FormLabel>
+                    <FormControl size="lg" type="username" placeholder="Enter username" isInvalid={usernameInvalid} />
+                </FormGroup>
+                <FormGroup controlId="formPassword">
+                    <FormLabel className="sr-only">
+                        Password
+                    </FormLabel>
+                    <FormControl size="lg" type="password" placeholder="Enter password" isInvalid={passwordInvalid} />
+                    <FormControl.Feedback type="invalid">
+                        Username or password wrong
+                    </FormControl.Feedback>
+                </FormGroup>
+                <Button size="lg" variant="dark" className="loginButton" type="submit">Sign in</Button>
+            </Form>
+        </div>
+    )
 }
+
+export default Login
