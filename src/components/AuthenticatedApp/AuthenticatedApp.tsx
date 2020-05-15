@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
 import Tank from '../Tank/Tank'
@@ -7,6 +7,14 @@ import Welcome from '../Welcome/Welcome'
 import Camera from '../Camera/Camera'
 import Settings from '../Settings/Settings'
 import './AuthenticatedApp.css'
+
+
+const routes = [
+    { path: '/welcome', Component: Welcome },
+    { path: '/tank', Component: Tank },
+    { path: '/camera', Component: Camera },
+    { path: '/settings', Component: Settings }
+]
 
 const AuthenticatedApp = () => {
     const [mounted, setMounted] = useState(false)
@@ -22,12 +30,22 @@ const AuthenticatedApp = () => {
                 timeout={300}
                 classNames='load'
             >
-                <Switch >
-                    <Route path='/welcome' exact children={<Welcome />} />
-                    <Route path='/tank' exact children={<Tank />} />
-                    <Route path='/camera' exact children={<Camera />} />
-                    <Route path='/settings' exact children={<Settings />} />
-                </Switch>
+                <div>
+                    {routes.map(({ path, Component }) => (
+                        <Route key={path} exact path={path}>
+                            {({ match }) => (
+                                <CSSTransition
+                                    in={match != null}
+                                    timeout={300}
+                                    classNames='navfadeleft'
+                                    unmountOnExit
+                                >
+                                    <Component />
+                                </CSSTransition>
+                            )}
+                        </Route>
+                    ))}
+                </div>
             </CSSTransition>
         </div>
     )

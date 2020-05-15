@@ -2,7 +2,7 @@ import React from 'react'
 
 const Tank = () => {
     return (
-        <div>
+        <div className='body-container'>
             Tank component loaded!
         </div>
     )
