@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+
 import Login from '../Login/Login'
+import { CSSTransition } from 'react-transition-group';
 
 const UnauthenticatedApp = () => {
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, []);
+    
     return (
-        <div>
+        <CSSTransition
+            in={mounted}
+            timeout={300}
+            classNames='load'
+        >
             <Login />
-        </div>
+        </CSSTransition>
     )
 }
 

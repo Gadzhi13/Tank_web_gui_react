@@ -1,10 +1,10 @@
-.loginFormContainer {
+.login-form-container {
     font-size: 2rem;
     min-width: 15vw;
     width: 350px;
 }
 
-.signinLabel {
+.sign-in-label {
     font-size: 2rem;
     padding-bottom: 15px;
 }

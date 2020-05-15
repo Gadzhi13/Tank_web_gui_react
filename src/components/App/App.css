@@ -1,9 +1,12 @@
 .app {
+    background-color: #282c34;
     text-align: center;
+    height: 100%;
+    min-width: 350px;
 }
 
 .app-logo {
-    height: 5vh;
+    height: 50px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,7 +17,7 @@
 
 .app-header {
     background-color: #282c34;
-    height: 6vh;
+    height: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +26,7 @@
 
 .app-footer {
     background-color: #282c34;
-    height: 6vh;
+    height: 60px;
     display: flex;
     flex-direction: column;
     text-align: right;
@@ -36,7 +39,8 @@
 .app-container {
     background-color: #dfefff;
     color: #282c34;
-    min-height: 88vh;
+    height: 87.7vh;
+    min-height: 256px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,4 +55,15 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+.load-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.load-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
 }
