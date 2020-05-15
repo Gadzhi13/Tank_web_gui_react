@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, FormLabel, FormControl, FormText } from 'react-bootstrap'
-import { Redirect } from 'react-router-dom'
 
 import { useSignIn } from '../../util/auth/auth-service'
 import './Login.css'
-import { useDispatch, useSelector } from 'react-redux';
-import State from '../../types/reduxState';
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
 
     const [usernameInvalid, setUsernameInvalid] = useState(false)
     const [passwordInvalid, setPasswordInvalid] = useState(false)
-    const isSignedIn: boolean = useSelector((state: State) => state.isSignedIn)
     const dispatch = useDispatch()
 
     const useHandleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -19,7 +16,6 @@ const Login = () => {
         let target = event.currentTarget
         let signedIn = useSignIn(target.formUsername.value, target.formPassword.value, dispatch)
         if (signedIn) {
-            //ToDo change to redux
             setUsernameInvalid(false)
             setPasswordInvalid(false)
         } else {
@@ -30,7 +26,6 @@ const Login = () => {
 
     return (
         <div className="p-1 loginFormContainer">
-            {isSignedIn ? <Redirect to="/welcome" /> : <br/>}
             <Form className="form-login" onSubmit={useHandleSubmit}>
                 <FormText className="signinLabel">Please sign in</FormText>
                 <FormGroup controlId="formUsername" >

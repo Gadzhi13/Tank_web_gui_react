@@ -1,13 +1,17 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Login from '../Login/Login';
-import Welcome from '../Welcome/Welcome';
+import Tank from '../Tank/Tank'
+import Welcome from '../Welcome/Welcome'
+import Camera from '../Camera/Camera'
+import Settings from '../Settings/Settings'
 
 const AuthenticatedApp = () => {
     return (
         <div>
-            <Route path="/login" exact component={Login} />
+            <Route path="/tank" exact component={Tank} />
             <Route path="/welcome" exact component={Welcome} />
+            <Route path="/camera" exact component={Camera} />
+            <Route path="/settings" exact component={Settings} />
         </div>
     )
 }
