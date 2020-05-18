@@ -1,3 +1,4 @@
-export default interface State {
-    isSignedIn: boolean
+export default interface reduxState {
+    isSignedIn: boolean,
+    prevRouteId: number
 }

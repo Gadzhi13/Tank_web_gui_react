@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux";
+import { Action, Reducer } from 'redux'
 
 const isSignedIn: Reducer = (state: boolean = false, action: Action): boolean => {
     switch (action.type) {
@@ -7,7 +7,7 @@ const isSignedIn: Reducer = (state: boolean = false, action: Action): boolean =>
         case 'SIGN_OUT':
             return false
         default:
-            return false
+            return state
     }
 }
 
