@@ -8,12 +8,15 @@ import 'bootstrap/dist/js/bootstrap.js'
 import { createStore, Store } from 'redux'
 import rootReducer from './reducers/root'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom';
 
 let store: Store = createStore(rootReducer)
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 )
