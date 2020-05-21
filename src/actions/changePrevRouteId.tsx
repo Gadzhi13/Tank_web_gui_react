@@ -1,4 +1,4 @@
-import changePrevRouteIdType from '../types/changePrevRouteIdType'
+import changePrevRouteIdType from '../types/changePrevRouteId'
 
 export const changePrevRouteId = (id: number): changePrevRouteIdType => {
     return {

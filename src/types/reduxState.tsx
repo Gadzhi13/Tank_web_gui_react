@@ -1,4 +1,6 @@
 export default interface reduxState {
     isSignedIn: boolean,
-    prevRouteId: number
+    prevRouteId: number,
+    animationDirection: string,
+    safeToRender: boolean
 }
