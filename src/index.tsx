@@ -13,7 +13,7 @@ let store: Store = createStore(rootReducer)
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+            <App />
     </Provider>,
     document.getElementById('root')
 )

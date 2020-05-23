@@ -1,11 +1,11 @@
 import { Action, Reducer } from 'redux'
 
-const animationDirection: Reducer = (state: string = 'navfadeleft', action: Action): string => {
+const animationDirection: Reducer = (state: string = 'left', action: Action): string => {
     switch (action.type) {
         case 'LEFT':
-            return 'navfadeleft'
+            return 'left'
         case 'RIGHT':
-            return 'navfaderight'
+            return 'right'
         default:
             return state
     }
