@@ -38,3 +38,9 @@
 .navfaderight-exit-active {
     transition: opacity 300ms, transform 300ms;
 }
+
+.route-body-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}

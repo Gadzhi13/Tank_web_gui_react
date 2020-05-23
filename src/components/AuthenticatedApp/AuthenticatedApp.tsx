@@ -1,24 +1,51 @@
-import React from 'react'
-import { Dispatch } from 'redux'
+import React, { useState, useEffect } from 'react'
 import { Location } from 'history'
+import { useLocation, Switch, Route } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useTransition, animated } from 'react-spring'
 
-import AuthenticatedAppBody from './AuthenticatedAppBody/AuthenticatedAppBody'
 import './AuthenticatedApp.css'
+import routes from '../../util/routes/routes'
+import reduxState from '../../types/reduxState'
 
-export interface AuthenticatedAppProps {
-    location: Location,
-    dispatch: Dispatch,
-    prevRouteId: number
-}
+const AuthenticatedApp = () => {
+    const location: Location = useLocation()
+    const animationDirection: string = useSelector((state: reduxState): string => state.animationDirection)
+    const [springProps, setSpringProps] = useState({
+        from: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
+        enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+        leave: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(-100%,0,0)' : 'translate3d(100%,0,0)' }
+    })
+    const transitions = useTransition(location, location => location.pathname, springProps)
 
-class AuthenticatedApp extends React.Component<AuthenticatedAppProps> {
-    location = this.props.location
-    dispatch = this.props.dispatch
-    prevRouteId: number = this.props.prevRouteId
+    useEffect(() => {
+        console.log("caught change in animationDirection")
+        setSpringProps({
+            from: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
+            enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+            leave: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(-100%,0,0)' : 'translate3d(100%,0,0)' }
+        })
+    }, [animationDirection])
 
-    render() {
-        return <AuthenticatedAppBody {...this.props} />
-    }
+    return (
+        <div className='authenticated-app-container'>
+            {transitions.map(({ item: location, props, key }) => (
+                <animated.div key={key} style={props}>
+                    <Switch location={location}>
+                        {routes.map(route => (
+                            <Route key={route.path} exact path={route.path}>
+                                {() => (
+                                    <div className='route-body-container'>
+                                        <route.Component />
+                                    </div>
+                                )}
+                            </Route>
+                        ))}
+                    </Switch>
+                </animated.div>
+            ))}
+        </div>
+    )
 }
 
 export default AuthenticatedApp
