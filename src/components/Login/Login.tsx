@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Form, FormGroup, FormLabel, FormControl, FormText } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
-import { useSignIn } from '../../util/auth/auth-service'
+import { useSignIn } from '../../util/auth/auth'
 import './Login.css'
 
 const Login = () => {

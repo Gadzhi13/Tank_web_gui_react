@@ -28,7 +28,6 @@ const NavBar = () => {
         if (location.pathname === e.pathname) return
         routes.map(({ id, path }): void => {
             if (path === e.pathname && id !== prevRouteId) {
-                console.log("current id - " + id + " prev id - " + prevRouteId)
                 if (id < prevRouteId) {
                     store.dispatch(animateRight())
                 } else {
@@ -36,13 +35,11 @@ const NavBar = () => {
                 }
                 store.dispatch(changePrevRouteId(id))
                 setToPath(e.pathname)
-                console.log("to path set to - " + e.pathname)
             }
         })
     }
 
     useEffect(() => {
-        console.log("topath in useeffect - " + toPath)
         history.push(toPath)
     }, [history, toPath])
 

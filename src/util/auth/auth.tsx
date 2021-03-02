@@ -5,7 +5,6 @@ import State from '../../types/reduxState'
 import { Dispatch } from 'redux';
 
 export const useSignIn = (username: String, password: String, dispatch: Dispatch): boolean => {
-    console.log("useSignIn fired in auth")
     //ToDo impelent call to backend and cookie injection
     if (username === "admin" && password === "admin") {
         console.log("Auth check success")

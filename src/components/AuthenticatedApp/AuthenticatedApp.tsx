@@ -19,7 +19,6 @@ const AuthenticatedApp = () => {
     const transitions = useTransition(location, location => location.pathname, springProps)
 
     useEffect(() => {
-        console.log("caught change in animationDirection")
         setSpringProps({
             from: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
             enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
