@@ -1,6 +1,6 @@
 import { Action, Reducer } from 'redux'
 
-const isSignedIn: Reducer = (state: boolean = false, action: Action): boolean => {
+const isSignedIn: Reducer = (state: boolean = true, action: Action): boolean => { //CHANGE TO FALSE
     switch (action.type) {
         case 'SIGN_IN':
             return true

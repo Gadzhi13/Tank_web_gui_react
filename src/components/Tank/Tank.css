@@ -1,0 +1,45 @@
+.title {
+    margin-top: 0.5rem;
+}
+
+.control {
+    width: 6rem;
+    height: 4rem;
+    margin: 0.4rem;
+}
+
+.init {
+    margin: 0.4rem;
+}
+
+.noPadding.col {
+    padding: 0;
+}
+
+.noPadding.col-sm, .noPadding.col-md, .noPadding.col-lg, .noPadding.col-xl {
+    padding: 0;
+}
+
+.controlColumn.col-xs, .controlColumn.col-sm, .controlColumn.col-md, .controlColumn.col-lg, .controlColumn.col-xl {
+    flex: 0 0 7rem;
+}
+
+.controlRow.row {
+    justify-content: center;
+}
+
+.speedControl.col {
+    flex: 0 0 22rem;
+}
+
+@media(max-width: 575px) {
+    .control {
+        width: 5.8rem;
+        height: 4rem;
+        margin: 0.4rem;
+    }
+    
+    .controlColumn.col-xs, .controlColumn.col-sm, .controlColumn.col-md, .controlColumn.col-lg, .controlColumn.col-xl {
+        flex: 0 0 6.6rem;
+    }
+}
