@@ -1,23 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { signIn } from '../../actions/signIn'
 import { signOut } from '../../actions/signOut'
 import State from '../../types/reduxState'
-import { Dispatch } from 'redux';
+import { Dispatch } from 'redux'
+
 
 export const useSignIn = (username: String, password: String, dispatch: Dispatch): boolean => {
     //ToDo impelent call to backend and cookie injection
     if (username === "admin" && password === "admin") {
-        console.log("Auth check success")
         dispatch(signIn())
         return true
     }
     return false
 }
 
-export const useSignOut = (): void => {
-    console.log("useSignOut fired in auth")
+export const useSignOut = (dispatch: Dispatch): void => {
     //ToDo impelent call to backed and cookie deletion
-    const dispatch = useDispatch()
     dispatch(signOut())
 }
 

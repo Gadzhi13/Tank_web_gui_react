@@ -33,13 +33,13 @@ const Login = () => {
                     <FormGroup controlId="formUsername" >
                         <FormLabel className="sr-only">
                             Username
-                    </FormLabel>
+                        </FormLabel>
                         <FormControl size="lg" type="username" placeholder="Enter username" isInvalid={usernameInvalid} />
                     </FormGroup>
                     <FormGroup controlId="formPassword">
                         <FormLabel className="sr-only">
                             Password
-                    </FormLabel>
+                        </FormLabel>
                         <FormControl size="lg" type="password" placeholder="Enter password" isInvalid={passwordInvalid} />
                         <FormControl.Feedback type="invalid">
                             Username or password wrong
