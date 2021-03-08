@@ -5,10 +5,10 @@ import Multimedia from '../../components/Multimedia/Multimedia'
 import route from '../../types/route'
 
 const routes: route[] = [
-    { id: 1, path: '/welcome', component: Welcome },
-    { id: 2, path: '/tank', component: Tank },
-    { id: 3, path: '/multimedia', component: Multimedia },
-    { id: 4, path: '/settings', component: Settings }
+    { id: 1, path: '/welcome', Component: Welcome },
+    { id: 2, path: '/tank', Component: Tank },
+    { id: 3, path: '/multimedia', Component: Multimedia },
+    { id: 4, path: '/settings', Component: Settings }
 ]
 
 export default routes
