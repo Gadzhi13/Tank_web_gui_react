@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const useSpotifyConnect = (clientId: String, clientPassword: String) => {
+export const spotifyConnect = (clientId: String, clientPassword: String) => {
     let clientString: string = clientId + ':' + clientPassword
-    axios({
+    return axios({
         method: 'POST',
         url: 'https://accounts.spotify.com/api/token',
         data: 'grant_type=client_credentials',
@@ -12,10 +12,29 @@ export const useSpotifyConnect = (clientId: String, clientPassword: String) => {
         }
     })
         .then((res) => {
-            console.log(res)
+            return res.data.access_token
         })
         .catch((err) => {
-            console.log("err caught - ")
+            console.log('err caught - ')
             console.log(err)
+            return err
         })
+}
+
+export const spotifyGetDevices = (accessToken: String) => {
+    let authString: String = 'Bearer ' + accessToken
+    return axios({
+        method: 'GET',
+        headers: {
+            'Authorization': authString
+        }
+    })
+    .then((res) => {
+        return res
+    })
+    .catch((err) => {
+        console.log('err caught - ')
+        console.log(err)
+        return err
+    })
 }
