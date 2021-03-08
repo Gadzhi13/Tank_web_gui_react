@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { Store } from 'redux'
+import { useStore } from 'react-redux'
+import { CSSTransition } from 'react-transition-group'
 
 import Login from '../Login/Login'
-import { CSSTransition } from 'react-transition-group';
+import { changePrevRouteId } from '../../actions/changePrevRouteId'
 
 const UnauthenticatedApp = () => {
     const [mounted, setMounted] = useState(false)
+    
+    const store: Store = useStore()
 
     useEffect(() => {
         setMounted(true)
-    }, []);
+        store.dispatch(changePrevRouteId(1))
+    }, [store]);
     
     return (
         <CSSTransition

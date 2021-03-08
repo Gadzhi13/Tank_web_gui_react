@@ -7,8 +7,8 @@ import './Login.css'
 
 const Login = () => {
 
-    const [usernameInvalid, setUsernameInvalid] = useState(false)
-    const [passwordInvalid, setPasswordInvalid] = useState(false)
+    const [usernameInvalid, setUsernameInvalid] = useState<boolean>(false)
+    const [passwordInvalid, setPasswordInvalid] = useState<boolean>(false)
     const dispatch = useDispatch()
 
     const useHandleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {

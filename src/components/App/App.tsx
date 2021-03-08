@@ -20,7 +20,7 @@ const App = () => {
                     {isSignedIn ? <NavBar /> : <img src={logo} className="app-logo" alt="logo" />}
                 </header>
                 <div className="app-container">
-                    {isSignedIn ? <Redirect to="/welcome" /> : <Redirect to='/login' />}
+                    {isSignedIn ? null : <Redirect to='/login' />}
                     {isSignedIn ? <AuthenticatedApp /> : <UnauthenticatedApp />}
                 </div>
                 <footer className="app-footer">
