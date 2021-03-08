@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, FormLabel, FormControl, FormText } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { Dispatch } from 'redux'
+import { LocationState, History } from 'history'
 
 import { useSignIn } from '../../util/auth/auth'
 import './Login.css'
@@ -9,7 +12,8 @@ const Login = () => {
 
     const [usernameInvalid, setUsernameInvalid] = useState<boolean>(false)
     const [passwordInvalid, setPasswordInvalid] = useState<boolean>(false)
-    const dispatch = useDispatch()
+    const dispatch: Dispatch = useDispatch()
+    const history: History<LocationState> = useHistory()
 
     const useHandleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault()
@@ -18,6 +22,7 @@ const Login = () => {
         if (signedIn) {
             setUsernameInvalid(false)
             setPasswordInvalid(false)
+            history.push('/welcome')
         } else {
             setUsernameInvalid(true)
             setPasswordInvalid(true)

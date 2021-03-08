@@ -19,12 +19,12 @@ import { useSignOut } from '../../util/auth/auth'
 const NavBar = () => {
     const active: string = 'nav-link nav-bar-text active'
     const inactive: string = 'nav-link nav-bar-text'
-    const [toPath, setToPath] = useState('/welcome')
     const location: Location<LocationState> = useLocation()
     const history: History<LocationState> = useHistory()
     const store: Store = useStore()
     const prevRouteId: number = useSelector((state: reduxState): number => state.prevRouteId)
     const dispatch: Dispatch = useDispatch()
+    const [toPath, setToPath] = useState<string>(location.pathname)
 
     const handleClick = (event: SyntheticEvent<HTMLAnchorElement>): void => {
         event.preventDefault()
@@ -48,8 +48,16 @@ const NavBar = () => {
     }
 
     useEffect(() => {
+        routes.forEach(({ id, path }) => {
+            if (path === location.pathname && id !== prevRouteId) {
+                store.dispatch(changePrevRouteId(id))
+            }
+        })
+    }, [history, store])
+
+    useEffect(() => {
         history.push(toPath)
-    }, [history, toPath])
+    }, [toPath])
 
     return (
         <CSSTransition
