@@ -24,7 +24,7 @@ const NavBar = () => {
     const store: Store = useStore()
     const prevRouteId: number = useSelector((state: reduxState): number => state.prevRouteId)
     const dispatch: Dispatch = useDispatch()
-    const [toPath, setToPath] = useState<string>(location.pathname)
+    const [toPath, setToPath] = useState<string>()
 
     const handleClick = (event: SyntheticEvent<HTMLAnchorElement>): void => {
         event.preventDefault()
@@ -53,11 +53,11 @@ const NavBar = () => {
                 store.dispatch(changePrevRouteId(id))
             }
         })
-    }, [history, store])
+    }, [history, store, location.pathname, prevRouteId])
 
     useEffect(() => {
-        history.push(toPath)
-    }, [toPath])
+        if (toPath) {history.push(toPath)}
+    }, [history, toPath])
 
     return (
         <CSSTransition

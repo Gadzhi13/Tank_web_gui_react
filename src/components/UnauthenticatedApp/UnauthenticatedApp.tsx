@@ -13,7 +13,7 @@ const UnauthenticatedApp = () => {
 
     useEffect(() => {
         setMounted(true)
-        store.dispatch(changePrevRouteId(1))
+        store.dispatch(changePrevRouteId(0))
     }, [store]);
     
     return (
