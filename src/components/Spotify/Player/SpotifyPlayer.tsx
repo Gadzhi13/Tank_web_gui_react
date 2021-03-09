@@ -1,35 +1,68 @@
 import React, { useState, useEffect } from 'react'
+import { Button, ListGroup, Row } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
-import { spotifyGetDevices } from '../../../util/spotify/spotifyController'
-import spotifyPlayerProps from '../../../types/spotifyPlayerProps'
-import { Button, ListGroup } from 'react-bootstrap';
+import { spotifyRequestHandler } from '../../../util/spotify/spotifyController'
+import reduxState from '../../../types/reduxState'
 
-const SpotifyPlayer = (props: spotifyPlayerProps) => {
+const SpotifyPlayer = () => {
 
     const [devices, setDevices] = useState<Array<any>>()
+    const [track, setTrack] = useState<string>()
+    const spotifyAccessToken: string = useSelector((state: reduxState) => state.spotifyAccessToken)
 
     const getDevices = () => {
-        spotifyGetDevices(props.accessToken)
+        spotifyRequestHandler(spotifyAccessToken, '/player/devices', 'GET')
             .then((res) => {
-                console.log(res)
                 try {
-                    setDevices(res)
+                    setDevices(res.devices)
                 } catch (err) {
                     console.log(err)
                 }
             })
     }
 
+    const getCurrentTrack = () => {
+        spotifyRequestHandler(spotifyAccessToken, '/player/currently-playing', 'GET')
+            .then((res) => {
+                try {
+                    setTrack(res.item.name)
+                } catch (err) {
+                    console.log(err)
+                }
+            })
+    }
+
+    const play = () => {
+        spotifyRequestHandler(spotifyAccessToken, '/player/play', 'PUT')
+    }
+
+    const pause = () => {
+        spotifyRequestHandler(spotifyAccessToken, '/player/pause', 'PUT')
+    }
+
     useEffect(() => {
-        console.log('devices')
-        console.log(devices)
-    }, [devices])
+        getDevices()
+        getCurrentTrack()
+    }, [])
 
     return(
         <div>
-            <Button onClick={getDevices}>Get Devices</Button>
+            <Row className="justify-content-sm-center">
+                <Button onClick={getDevices}>Refresh Devices</Button>
+                <Button onClick={getCurrentTrack}>Refresh Current Track</Button>
+            </Row>
+            <Row className="justify-content-sm-center">
+                <Button onClick={play}>Play</Button>
+                <Button onClick={pause}>Pause</Button>
+            </Row>
             <ListGroup>
+                {devices ? 'List of devices' : null}
                 {devices ? devices.map(el => <ListGroup.Item key={el.id}>{el.name}</ListGroup.Item>) : null}
+            </ListGroup>
+            <ListGroup>
+                {track ? 'Current Track' : null}
+                {track ? <ListGroup.Item key={track}>{track}</ListGroup.Item> : null}
             </ListGroup>
         </div>
     )

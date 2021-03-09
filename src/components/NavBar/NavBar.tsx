@@ -5,7 +5,6 @@ import { CSSTransition } from 'react-transition-group'
 import { Location, LocationState, History } from 'history'
 import { useSelector, useStore } from 'react-redux'
 import { Store } from 'redux'
-import { changePrevRouteId } from '../../actions/changePrevRouteId'
 import { useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 
@@ -15,6 +14,7 @@ import reduxState from '../../types/reduxState'
 import { animateRight } from '../../actions/animateRight'
 import { animateLeft } from '../../actions/animateLeft'
 import { useSignOut } from '../../util/auth/auth'
+import { changePrevRouteId } from '../../actions/changePrevRouteId'
 
 const NavBar = () => {
     const active: string = 'nav-link nav-bar-text active'

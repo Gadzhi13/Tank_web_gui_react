@@ -6,7 +6,6 @@ import Camera from '../Camera/Camera'
 const Multimedia = () => {
     return (
         <div>
-            Multimedia component loaded!
             <SpotifyMain></SpotifyMain>
             <Camera></Camera>
         </div>

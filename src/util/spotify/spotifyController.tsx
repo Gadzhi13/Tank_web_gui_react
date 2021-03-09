@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 //DEPRECATED: not needed with implicit grant on spotify end
 export const spotifyConnect = () => {
@@ -22,11 +22,11 @@ export const spotifyConnect = () => {
         })
 }
 
-export const spotifyGetDevices = (accessToken: String) => {
+export const spotifyRequestHandler = (accessToken: string, endpoint: string, methodType: AxiosRequestConfig['method']) => {
     let authString: String = 'Bearer ' + accessToken
     return axios({
-        url: 'https://api.spotify.com/v1/me/player/devices',
-        method: 'GET',
+        url: 'https://api.spotify.com/v1/me' + endpoint,
+        method: methodType,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const spotifyGetDevices = (accessToken: String) => {
         }
     })
     .then((res) => {
-        return res.data.devices
+        return res.data
     })
     .catch((err) => {
         console.log('err caught - ')

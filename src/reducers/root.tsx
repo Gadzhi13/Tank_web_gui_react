@@ -4,12 +4,14 @@ import isSignedIn from './isSignedIn'
 import prevRouteId from './prevRouteId'
 import animationDirection from './animationDirection'
 import safeToNavigate from './safeToNavigate'
+import spotifyAccessToken from './spotifyAccessToken'
 
 const root: Reducer = combineReducers({
     isSignedIn,
     prevRouteId,
     animationDirection,
-    safeToNavigate
+    safeToNavigate,
+    spotifyAccessToken
 })
 
 export default root
