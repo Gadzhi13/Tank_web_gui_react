@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Button, ListGroup, Row, Accordion, Card, ProgressBar, FormGroup, FormControl } from 'react-bootstrap'
+import { Button, ListGroup, Row, Accordion, Card, FormGroup, FormControl } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import { BsFillPlayFill, BsFillPauseFill, BsFillSkipBackwardFill, BsFillSkipForwardFill } from "react-icons/bs"
 
 import { spotifyRequestHandler } from '../../../util/spotify/spotifyController'
 import reduxState from '../../../types/reduxState'
@@ -11,7 +12,6 @@ const SpotifyPlayer = () => {
     const [playlists, setPlaylists] = useState<Array<any>>()
     const [track, setTrack] = useState<string>()
     const [artist, setArtist] = useState<string>()
-    const [progressMs, setProgressMs] = useState<number>(0)
     const [currentProgress, setCurrentProgress] = useState<number>(0)
     const [targetProgress, setTargetProgress] = useState<number>(0)
     const [duration, setDuration] = useState<number>(0)
@@ -47,7 +47,6 @@ const SpotifyPlayer = () => {
                     setArtist(res.item.artists[0].name)
                     setTrack(res.item.name)
                     setDuration(res.item.duration_ms)
-                    setProgressMs(res.progress_ms)
                     setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
                 } catch (err) {
                     console.log(err)
@@ -82,24 +81,22 @@ const SpotifyPlayer = () => {
     }
 
     useEffect(() => {
-        setInterval(() => {
-            getDevices()
-            getCurrentTrack()
-        }, 1000)
+        const intervalId = setInterval(() => {
+                getDevices()
+                getCurrentTrack()
+            }, 1000)
+        return () => clearTimeout(intervalId)
+        
     }, [])
 
     useEffect(() => {
-        const timeOutId = setTimeout(() => sendChangeCurrentProgress(targetProgress), 500)
-        return () => clearTimeout(timeOutId)
+        if (targetProgress == 0) return
+        const timeoutId = setTimeout(() => sendChangeCurrentProgress(targetProgress), 500)
+        return () => clearTimeout(timeoutId)
     }, [targetProgress])
 
     return (
         <div>
-            <br />
-            <Row className="justify-content-sm-center">
-                <Button onClick={getDevices}>Refresh Devices</Button>
-                <Button onClick={getCurrentTrack}>Refresh Current Track</Button>
-            </Row>
             <ListGroup>
                 {devices ? 'List of devices' : null}
                 {devices ? devices.map(el => <ListGroup.Item key={el.id}>{el.name}</ListGroup.Item>) : null}
@@ -112,10 +109,10 @@ const SpotifyPlayer = () => {
                 <FormControl type='range' value={currentProgress} onChange={changeCurrentProgress} />
             </FormGroup>
             <Row className="justify-content-sm-center">
-                <Button onClick={previous}>Prev</Button>
-                <Button onClick={play}>Play</Button>
-                <Button onClick={pause}>Pause</Button>
-                <Button onClick={next}>Next</Button>
+                <Button onClick={previous}><BsFillSkipBackwardFill/></Button>
+                <Button onClick={play}><BsFillPlayFill/></Button>
+                <Button onClick={pause}><BsFillPauseFill/></Button>
+                <Button onClick={next}><BsFillSkipForwardFill/></Button>
             </Row>
             <br />
             Player
