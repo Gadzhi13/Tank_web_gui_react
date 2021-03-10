@@ -97,10 +97,23 @@ const SpotifyPlayer = () => {
 
     return (
         <div>
-            <ListGroup>
-                {devices ? 'List of devices' : null}
-                {devices ? devices.map(el => <ListGroup.Item key={el.id}>{el.name}</ListGroup.Item>) : null}
-            </ListGroup>
+            <Accordion onClick={getDevices}>
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle as={Button} eventKey="0" >
+                            Show Devices
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                                <ListGroup>
+                                    {devices ? 'List of devices' : null}
+                                    {devices ? devices.map(el => <ListGroup.Item key={el.id}>{el.name}</ListGroup.Item>) : null}
+                                </ListGroup>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card.Header>
+                </Card>
+            </Accordion>
             {track ? 'Current Track' : null}
             <ListGroup>
                 {track ? <ListGroup.Item key={track}>{artist + ' - ' + track}</ListGroup.Item> : null}
@@ -114,8 +127,6 @@ const SpotifyPlayer = () => {
                 <Button onClick={pause}><BsFillPauseFill/></Button>
                 <Button onClick={next}><BsFillSkipForwardFill/></Button>
             </Row>
-            <br />
-            Player
             <br />
             <Accordion onClick={getPlaylists}>
                 <Card>
