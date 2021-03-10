@@ -22,11 +22,12 @@ export const spotifyConnect = () => {
         })
 }
 
-export const spotifyRequestHandler = (accessToken: string, endpoint: string, methodType: AxiosRequestConfig['method']) => {
+export const spotifyRequestHandler = (accessToken: string, endpoint: string, methodType: AxiosRequestConfig['method'], body: string = '') => {
     let authString: String = 'Bearer ' + accessToken
     return axios({
         url: 'https://api.spotify.com/v1/me' + endpoint,
         method: methodType,
+        data: body,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

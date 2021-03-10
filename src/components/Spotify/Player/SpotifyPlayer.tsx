@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, ListGroup, Row, Accordion, Card, FormGroup, FormControl } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { BsFillPlayFill, BsFillPauseFill, BsFillSkipBackwardFill, BsFillSkipForwardFill } from "react-icons/bs"
+import { BsFillPlayFill, BsFillPauseFill, BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs'
 
 import { spotifyRequestHandler } from '../../../util/spotify/spotifyController'
 import reduxState from '../../../types/reduxState'
@@ -60,10 +60,6 @@ const SpotifyPlayer = () => {
         }
     }
 
-    const sendChangeCurrentProgress = (targetProgress: number) => {
-        spotifyRequestHandler(spotifyAccessToken, '/player/seek?position_ms=' + targetProgress, 'PUT')
-    }
-
     const play = () => {
         spotifyRequestHandler(spotifyAccessToken, '/player/play', 'PUT')
     }
@@ -80,20 +76,27 @@ const SpotifyPlayer = () => {
         spotifyRequestHandler(spotifyAccessToken, '/player/previous', 'POST')
     }
 
+    const changeDevice = (e: string) => {
+        spotifyRequestHandler(spotifyAccessToken, '/player', 'PUT', '{"device_ids": ["' + e + '"]}')
+    }
+
     useEffect(() => {
         const intervalId = setInterval(() => {
+            console.log('effect check')
                 getDevices()
                 getCurrentTrack()
             }, 1000)
         return () => clearTimeout(intervalId)
-        
-    }, [])
+    })
 
     useEffect(() => {
-        if (targetProgress == 0) return
+        if (targetProgress === 0) return
+        const sendChangeCurrentProgress = (targetProgress: number) => {
+            spotifyRequestHandler(spotifyAccessToken, '/player/seek?position_ms=' + targetProgress, 'PUT')
+        }
         const timeoutId = setTimeout(() => sendChangeCurrentProgress(targetProgress), 500)
         return () => clearTimeout(timeoutId)
-    }, [targetProgress])
+    }, [targetProgress, spotifyAccessToken])
 
     return (
         <div>
@@ -107,7 +110,7 @@ const SpotifyPlayer = () => {
                             <Card.Body>
                                 <ListGroup>
                                     {devices ? 'List of devices' : null}
-                                    {devices ? devices.map(el => <ListGroup.Item key={el.id}>{el.name}</ListGroup.Item>) : null}
+                                    {devices ? devices.map(el => <ListGroup.Item as='button' key={el.id} onClick={() => changeDevice(el.id)}>{el.name}</ListGroup.Item>) : null}
                                 </ListGroup>
                             </Card.Body>
                         </Accordion.Collapse>
