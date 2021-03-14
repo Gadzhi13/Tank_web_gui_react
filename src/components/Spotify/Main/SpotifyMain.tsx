@@ -18,8 +18,8 @@ const SpotifyMain = () => {
     const clientId: string = 'client_id=3ad740515ff74609bb38bc94cebf18b6&'
     const redirectUrl: string = 'redirect_uri=http://localhost:3000/multimedia&'
     const responseType: string = 'response_type=token&'
-    const scope: string = 'scope=user-read-playback-state&user-modify-playback-state'
-    const showDialog: string = 'show_dialog=false'
+    const scope: string = 'scope=user-read-playback-state user-modify-playback-state streaming user-read-email user-read-private&'
+    const showDialog: string = 'show_dialog=true'
 
     const endUrl: string = spotifyUrl + clientId + redirectUrl + responseType + scope + showDialog
 

@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap'
 
 import './Tank.css'
 
 const Tank = () => {
+    const [speed, setSpeed] = useState<number>(100)
+
+    const changeSpeed = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSpeed((e.target.value as unknown) as number)
+    }
+
     return (
     <Container>
         <h4 className="title">Tank control page:</h4>
@@ -18,7 +24,7 @@ const Tank = () => {
                 <Form>
                     <Row className="justify-content-sm-center controlRow">
                         <Col className="speedControl">
-                            <FormControl type="range" className="custom-range" id="speedRange" value="100" /*onchange="handleRa nge()"*/ />
+                            <FormControl type="range" className="custom-range" id="speedRange" value={speed} onChange={changeSpeed} />
                         </Col>
                     </Row>
                 </Form>
