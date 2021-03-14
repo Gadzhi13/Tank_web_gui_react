@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, BrowserRouter } from 'react-router-dom'
-import logo from '../../logo.svg'
 
+import logo from '../../logo.svg'
 import './App.css'
 import NavBar from '../NavBar/NavBar'
 import AuthenticatedApp from '../AuthenticatedApp/AuthenticatedApp'

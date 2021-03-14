@@ -2,6 +2,7 @@ import React, {  useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import { Store } from 'redux'
 import { useStore, useSelector } from 'react-redux'
+import { IconContext } from 'react-icons'
 
 import SpotifyPlayer from '../Player/SpotifyPlayer'
 import reduxState from '../../../types/reduxState'
@@ -34,7 +35,9 @@ const SpotifyMain = () => {
 
     return (
         <div>
-            {spotifyAccessToken ? <SpotifyPlayer/> : <Button size="lg" variant="dark" href={endUrl}>Connect</Button>}
+            <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                {spotifyAccessToken ? <SpotifyPlayer/> : <Button size="lg" variant="dark" href={endUrl}>Connect</Button>}
+            </IconContext.Provider>
         </div>
     )
 }

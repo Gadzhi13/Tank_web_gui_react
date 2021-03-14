@@ -47,21 +47,6 @@ const SpotifyPlayer = () => {
                 }
             })
     }
-    
-    const getCurrentTrack = (): void => {
-        if (!spotifyAccessToken) return
-        spotifyRequestHandler(spotifyAccessToken, '/player/currently-playing', 'GET')
-            .then((res): void => {
-                try {
-                    setArtist(res.item.artists[0].name)
-                    setTrack(res.item.name)
-                    setDuration(res.item.duration_ms)
-                    setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
-                } catch (err) {
-                    console.log(err)
-                }
-            })
-    }
 
     const changeCurrentProgress = (e: React.ChangeEvent<HTMLInputElement>): void => {
         let targetProgress = 0
@@ -102,23 +87,38 @@ const SpotifyPlayer = () => {
     }
 
     useEffect(() => {
+        const getCurrentTrack = (): void => {
+            if (!spotifyAccessToken) return
+            spotifyRequestHandler(spotifyAccessToken, '/player/currently-playing', 'GET')
+                .then((res): void => {
+                    try {
+                        setArtist(res.item.artists[0].name)
+                        setTrack(res.item.name)
+                        setDuration(res.item.duration_ms)
+                        setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
+                    } catch (err) {
+                        console.log(err)
+                    }
+                })
+        }
+
         const intervalId = setInterval(() => {
             getCurrentTrack()
         }, 300)
         return () => clearInterval(intervalId)
-    }, [getCurrentTrack])
+    }, [spotifyAccessToken])
 
     return (
         <div>
-            <Row className="justify-content-sm-center">
-                <Button variant="link" onClick={showDevices} id="devicesButton"><BsTablet/></Button>
+            <Row className='justify-content-sm-center'>
+                <Button variant='link' onClick={showDevices} id='devicesButton'><BsTablet /></Button>
                 <Overlay
                     show={deviceListShown}
-                    target={document.getElementById("devicesButton")}
-                    placement="bottom"
+                    target={document.getElementById('devicesButton')}
+                    placement='bottom'
                 >
-                    <Popover id="popover-basic">
-                        <Popover.Title as="h3">Connected Devices</Popover.Title>
+                    <Popover id='popover-basic'>
+                        <Popover.Title as='h3'>Connected Devices</Popover.Title>
                         <Popover.Content>
                             <ListGroup>
                                 {devices ? devices.map(el => <ListGroup.Item as='button' key={el.id} onClick={() => changeDevice(el.id)}>{el.name}</ListGroup.Item>) : null}
@@ -134,28 +134,24 @@ const SpotifyPlayer = () => {
             <FormGroup>
                 <FormControl type='range' value={currentProgress} onChange={changeCurrentProgress} />
             </FormGroup>
-            <Row className="justify-content-sm-center">
-                <Button onClick={previous}><BsFillSkipBackwardFill /></Button>
-                <Button onClick={play}><BsFillPlayFill /></Button>
-                <Button onClick={pause}><BsFillPauseFill /></Button>
-                <Button onClick={next}><BsFillSkipForwardFill /></Button>
+            <Row className='justify-content-sm-center'>
+                <Button variant='link' onClick={previous}><BsFillSkipBackwardFill /></Button>
+                <Button variant='link' onClick={play}><BsFillPlayFill /></Button>
+                <Button variant='link' onClick={pause}><BsFillPauseFill /></Button>
+                <Button variant='link' onClick={next}><BsFillSkipForwardFill /></Button>
             </Row>
             <br />
             <Accordion onClick={getPlaylists}>
-                <Card>
-                    <Card.Header>
-                        <Accordion.Toggle as={Button} eventKey="0" >
-                            Show Playlist
+                <Accordion.Toggle variant='dark' as={Button} eventKey='0' >
+                    Show Playlist
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">
-                            <Card.Body>
-                                <ListGroup>
-                                    {playlists ? playlists.map(el => <ListGroup.Item key={el.name}>{el.name}</ListGroup.Item>) : null}
-                                </ListGroup>
-                            </Card.Body>
-                        </Accordion.Collapse>
-                    </Card.Header>
-                </Card>
+                <Accordion.Collapse eventKey='0'>
+                    <Card.Body>
+                        <ListGroup>
+                            {playlists ? playlists.map(el => <ListGroup.Item key={el.name}>{el.name}</ListGroup.Item>) : null}
+                        </ListGroup>
+                    </Card.Body>
+                </Accordion.Collapse>
             </Accordion>
         </div>
     )
