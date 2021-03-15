@@ -5,7 +5,7 @@ import { useStore, useSelector } from 'react-redux'
 import { IconContext } from 'react-icons'
 
 import SpotifyPlayer from '../Player/SpotifyPlayer'
-import reduxState from '../../../types/reduxState'
+import ReduxState from '../../../types/ReduxState'
 import { setSpotifyAccessToken } from '../../../actions/setSpotifyAccessToken'
 
 //TODO: add alphanumeric check on cleint ID
@@ -13,7 +13,7 @@ import { setSpotifyAccessToken } from '../../../actions/setSpotifyAccessToken'
 const SpotifyMain = () => {
 
     const store: Store = useStore()
-    const spotifyAccessToken: string = useSelector((state: reduxState) => state.spotifyAccessToken)
+    const spotifyAccessToken: string = useSelector((state: ReduxState) => state.spotifyAccessToken)
 
     const spotifyUrl: string = 'https://accounts.spotify.com/authorize?'
     const clientId: string = 'client_id=3ad740515ff74609bb38bc94cebf18b6&'

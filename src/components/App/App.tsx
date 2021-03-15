@@ -7,11 +7,11 @@ import './App.css'
 import NavBar from '../NavBar/NavBar'
 import AuthenticatedApp from '../AuthenticatedApp/AuthenticatedApp'
 import UnauthenticatedApp from '../UnauthenticatedApp/UnauthenticatedApp'
-import reduxState from '../../types/reduxState'
+import ReduxState from '../../types/ReduxState'
 
 
 const App = () => {
-    const isSignedIn: boolean = useSelector((state: reduxState) => state.isSignedIn)
+    const isSignedIn: boolean = useSelector((state: ReduxState) => state.isSignedIn)
 
     return (
         <BrowserRouter>

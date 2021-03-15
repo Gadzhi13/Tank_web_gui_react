@@ -6,11 +6,11 @@ import { useTransition, animated } from 'react-spring'
 
 import './AuthenticatedApp.css'
 import routes from '../../util/routes/routes'
-import reduxState from '../../types/reduxState'
+import ReduxState from '../../types/ReduxState'
 
 const AuthenticatedApp = () => {
     const location: Location = useLocation()
-    const animationDirection: string = useSelector((state: reduxState): string => state.animationDirection)
+    const animationDirection: string = useSelector((state: ReduxState): string => state.animationDirection)
     const [springProps, setSpringProps] = useState({
         from: { opacity: 0, transform: animationDirection === 'left' ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
         enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },

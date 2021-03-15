@@ -3,20 +3,21 @@ import { Button, ListGroup, Row, Accordion, Card, FormGroup, FormControl, Popove
 import { useSelector } from 'react-redux'
 import { BsFillPlayFill, BsFillPauseFill, BsFillSkipBackwardFill, BsFillSkipForwardFill, BsTablet } from 'react-icons/bs'
 
-
+import WebPlayer from './WebPlayer/WebPlayer'
 import { spotifyRequestHandler } from '../../../util/spotify/spotifyController'
-import reduxState from '../../../types/reduxState'
+import ReduxState from '../../../types/ReduxState'
 
 const SpotifyPlayer = () => {
 
-    const [devices, setDevices] = useState<Array<any>>()
-    const [playlists, setPlaylists] = useState<Array<any>>()
+    const [devices, setDevices] = useState<Array<any>>() //TODO ADD TYPE
+    const [playlists, setPlaylists] = useState<Array<any>>() //TODO ADD TYPE
+    const [playlistInfos, setPlaylistInfos] = useState<Array<Array<any>>>() //TODO ADD TYPE
     const [track, setTrack] = useState<string>()
     const [artist, setArtist] = useState<string>()
     const [currentProgress, setCurrentProgress] = useState<number>(0)
     const [duration, setDuration] = useState<number>(0)
     const [rangeTimeoutId, setRangeTimeoutId] = useState<NodeJS.Timeout>()
-    const spotifyAccessToken: string = useSelector((state: reduxState) => state.spotifyAccessToken)
+    const spotifyAccessToken: string = useSelector((state: ReduxState) => state.spotifyAccessToken)
     const [deviceListShown, setDeviceListShown] = useState<boolean>(false)
 
     const showDevices = (): void => {
@@ -26,10 +27,29 @@ const SpotifyPlayer = () => {
 
     const getPlaylists = (): void => {
         if (playlists || !spotifyAccessToken) return
-        spotifyRequestHandler(spotifyAccessToken, '/playlists', 'GET')
+        spotifyRequestHandler(spotifyAccessToken, '/me/playlists', 'GET')
             .then((res) => {
                 try {
                     setPlaylists(res.items)
+                    console.log(res.items)
+                } catch (err) {
+                    console.log(err)
+                }
+            })
+    }
+
+    const getPlaylist = (id: string): void => {
+        if (!spotifyAccessToken) return
+        console.log(id)
+        spotifyRequestHandler(spotifyAccessToken, '/playlists/' + id, 'GET')
+            .then((res) => {
+                try {
+                    if (playlistInfos) {
+                        const buffer = playlistInfos
+                        buffer.push(res.tracks)
+                        setPlaylistInfos(buffer)
+                    }
+                    console.log(playlistInfos)
                 } catch (err) {
                     console.log(err)
                 }
@@ -38,7 +58,7 @@ const SpotifyPlayer = () => {
 
     const getDevices = (): void => {
         if (!spotifyAccessToken) return
-        spotifyRequestHandler(spotifyAccessToken, '/player/devices', 'GET')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/devices', 'GET')
             .then((res) => {
                 try {
                     setDevices(res.devices)
@@ -62,34 +82,34 @@ const SpotifyPlayer = () => {
     }
 
     const play = (): void => {
-        spotifyRequestHandler(spotifyAccessToken, '/player/play', 'PUT')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/play', 'PUT')
     }
 
     const pause = (): void => {
-        spotifyRequestHandler(spotifyAccessToken, '/player/pause', 'PUT')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/pause', 'PUT')
     }
 
     const next = (): void => {
-        spotifyRequestHandler(spotifyAccessToken, '/player/next', 'POST')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/next', 'POST')
     }
 
     const previous = (): void => {
-        spotifyRequestHandler(spotifyAccessToken, '/player/previous', 'POST')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/previous', 'POST')
     }
 
-    const changeDevice = (e: string): void => {
-        spotifyRequestHandler(spotifyAccessToken, '/player', 'PUT', '{"device_ids": ["' + e + '"]}')
+    const changeDevice = (id: string): void => {
+        spotifyRequestHandler(spotifyAccessToken, '/me/player', 'PUT', '{"device_ids": ["' + id + '"]}')
     }
 
     const sendChangeCurrentProgress = (targetProgress: number): void => {
         console.log(targetProgress)
-        spotifyRequestHandler(spotifyAccessToken, '/player/seek?position_ms=' + targetProgress, 'PUT')
+        spotifyRequestHandler(spotifyAccessToken, '/me/player/seek?position_ms=' + targetProgress, 'PUT')
     }
 
     useEffect(() => {
         const getCurrentTrack = (): void => {
             if (!spotifyAccessToken) return
-            spotifyRequestHandler(spotifyAccessToken, '/player/currently-playing', 'GET')
+            spotifyRequestHandler(spotifyAccessToken, '/me/player/currently-playing', 'GET')
                 .then((res): void => {
                     try {
                         setArtist(res.item.artists[0].name)
@@ -110,6 +130,7 @@ const SpotifyPlayer = () => {
 
     return (
         <div>
+            <WebPlayer accessToken={spotifyAccessToken}></WebPlayer>
             <Row className='justify-content-sm-center'>
                 <Button variant='link' onClick={showDevices} id='devicesButton'><BsTablet /></Button>
                 <Overlay
@@ -144,11 +165,28 @@ const SpotifyPlayer = () => {
             <Accordion onClick={getPlaylists}>
                 <Accordion.Toggle variant='dark' as={Button} eventKey='0' >
                     Show Playlist
-                        </Accordion.Toggle>
+                </Accordion.Toggle>
                 <Accordion.Collapse eventKey='0'>
                     <Card.Body>
                         <ListGroup>
-                            {playlists ? playlists.map(el => <ListGroup.Item key={el.name}>{el.name}</ListGroup.Item>) : null}
+                            {playlists ? playlists.map(el => {
+                                return (
+                                    <ListGroup.Item key={el.name}>
+                                        <Accordion onClick={() => getPlaylist(el.id)}>
+                                            <Accordion.Toggle variant='link' as={Button} eventKey='1' >
+                                                {el.name}
+                                            </Accordion.Toggle>
+                                            <Accordion.Collapse eventKey='1'>
+                                                <Card.Body>
+                                                    <ListGroup>
+
+                                                    </ListGroup>
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Accordion>
+                                    </ListGroup.Item>
+                                )
+                            }) : null}
                         </ListGroup>
                     </Card.Body>
                 </Accordion.Collapse>

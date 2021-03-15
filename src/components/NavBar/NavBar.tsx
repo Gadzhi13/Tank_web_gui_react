@@ -10,7 +10,7 @@ import { Dispatch } from 'redux'
 
 import './NavBar.css'
 import routes from '../../util/routes/routes'
-import reduxState from '../../types/reduxState'
+import ReduxState from '../../types/ReduxState'
 import { animateRight } from '../../actions/animateRight'
 import { animateLeft } from '../../actions/animateLeft'
 import { useSignOut } from '../../util/auth/auth'
@@ -22,7 +22,7 @@ const NavBar = () => {
     const location: Location<LocationState> = useLocation()
     const history: History<LocationState> = useHistory()
     const store: Store = useStore()
-    const prevRouteId: number = useSelector((state: reduxState): number => state.prevRouteId)
+    const prevRouteId: number = useSelector((state: ReduxState): number => state.prevRouteId)
     const dispatch: Dispatch = useDispatch()
     const [toPath, setToPath] = useState<string>()
 

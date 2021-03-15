@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { signIn } from '../../actions/signIn'
 import { signOut } from '../../actions/signOut'
-import State from '../../types/reduxState'
+import State from '../../types/ReduxState'
 import { Dispatch } from 'redux'
 
 

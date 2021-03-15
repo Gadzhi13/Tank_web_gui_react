@@ -1,4 +1,4 @@
-export default interface reduxState {
+export default interface ReduxState {
     isSignedIn: boolean,
     prevRouteId: number,
     animationDirection: string,
