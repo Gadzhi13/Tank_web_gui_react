@@ -35,7 +35,9 @@ const DeviceSelector = (props: DeviceSeldctorProps) => {
             <Button variant='link' onClick={showDevices} id='devicesButton'><BsTablet /></Button>
             <Overlay
                 show={deviceListShown}
+                rootClose={true}
                 target={document.getElementById('devicesButton')}
+                onHide={showDevices}
                 placement={props.placement ? props.placement : 'bottom'}
             >
                 <Popover id='popover-basic'>

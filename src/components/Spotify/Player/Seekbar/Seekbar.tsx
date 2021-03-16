@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FormControl, FormGroup } from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 
 import { SeekbarProps } from '../../../../types/Spotify'
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'

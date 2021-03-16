@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row } from 'react-bootstrap'
+import { Row, Container } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
 import WebPlayer from './WebPlayer/WebPlayer'
@@ -42,7 +42,7 @@ const SpotifyPlayer = () => {
     }, [spotifyAccessToken])
 
     return (
-        <div>
+        <Container className='justify-content-sm-center'>
             <WebPlayer accessToken={spotifyAccessToken}></WebPlayer>
             <Row className='justify-content-sm-center'>
                 <DeviceSelector accessToken={spotifyAccessToken}></DeviceSelector>
@@ -52,9 +52,8 @@ const SpotifyPlayer = () => {
             <Row className='justify-content-sm-center'>
                 <PlayerCommands accessToken={spotifyAccessToken}></PlayerCommands>
             </Row>
-            <br />
             <Playlists accessToken={spotifyAccessToken}></Playlists>
-        </div>
+        </Container>
     )
 }
 
