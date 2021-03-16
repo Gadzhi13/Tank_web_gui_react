@@ -25,6 +25,13 @@ export interface CurrentTrackProps {
     track: string
 }
 
+export interface SeekbarProps {
+    accessToken: string,
+    currentProgress: number,
+    duration: number,
+    setCurrentProgress: (value: React.SetStateAction<number>) => void
+}
+
 export interface DeviceSeldctorProps {
     accessToken: string,
     placement?: Placement

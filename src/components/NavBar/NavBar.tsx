@@ -48,7 +48,7 @@ const NavBar = () => {
     }
 
     useEffect(() => {
-        routes.forEach(({ id, path }) => {
+        routes.forEach(({ id, path }): void => {
             if (path === location.pathname && id !== prevRouteId) {
                 store.dispatch(changePrevRouteId(id))
             }
