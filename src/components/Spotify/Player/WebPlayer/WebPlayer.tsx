@@ -1,7 +1,17 @@
 import React, { useEffect } from 'react'
+import { useSelector, useStore } from 'react-redux'
+import { Store } from 'redux'
+import { useDispatch } from 'react-redux'
+import { Dispatch } from 'redux'
+
 import { SpotifyPlayerCallback, WebPlayerProps, WebPlaybackError, WebPlaybackReady } from '../../../../types/Spotify'
+import ReduxState from '../../../../types/ReduxState'
+import { setWebPlayerId } from '../../../../actions/setWebPlayerId';
 
 const WebPlayer = (props: WebPlayerProps) => {
+    const webPlayerId: string = useSelector((state: ReduxState): string => state.webPlayerId)
+    const store: Store = useStore()
+
     // @ts-ignore
     let player: WebPlaybackPlayer
 
@@ -23,6 +33,7 @@ const WebPlayer = (props: WebPlayerProps) => {
         // Ready
         player.addListener('ready', ({ device_id }: WebPlaybackReady) => {
             console.log('Ready with Device ID', device_id)
+            store.dispatch(setWebPlayerId(device_id))
         })
 
         // Not Ready
@@ -31,39 +42,31 @@ const WebPlayer = (props: WebPlayerProps) => {
         })
 
         player.connect()
-    };
-
-    const disconnectPlayer = () => {
-        player.disconnect()
     }
 
     useEffect(() => {
-        const loadSpotifyPlayer = () => {
-            const scriptTag = document.getElementById('spotify-player')
-            if (!scriptTag) {
-                const script = document.createElement('script')
+        const scriptTag = document.getElementById('spotify-player')
+        if (!scriptTag) {
+            const script = document.createElement('script')
 
-                script.id = 'spotify-player'
-                script.type = 'text/javascript'
-                script.async = false
-                script.defer = true
-                script.src = 'https://sdk.scdn.co/spotify-player.js'
-                if (script.onload) { return }
-                if (script.onerror) { return }
-                document.head.appendChild(script)
-            }
+            script.id = 'spotify-player'
+            script.type = 'text/javascript'
+            script.async = false
+            script.defer = true
+            script.src = 'https://sdk.scdn.co/spotify-player.js'
+            if (script.onload) { return }
+            if (script.onerror) { return }
+            document.head.appendChild(script)
         }
 
-        // @ts-ignore
-        if (!window.onSpotifyWebPlaybackSDKReady) {
+        if (!webPlayerId) {
             // @ts-ignore
-            window.onSpotifyWebPlaybackSDKReady = initializePlayer
-        } else {
-            initializePlayer()
-        }
-        loadSpotifyPlayer()
-        return () => {
-            disconnectPlayer()
+            if (!window.onSpotifyWebPlaybackSDKReady) {
+                // @ts-ignore
+                window.onSpotifyWebPlaybackSDKReady = initializePlayer
+            } else {
+                initializePlayer()
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
