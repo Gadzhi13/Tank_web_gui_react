@@ -47,12 +47,18 @@ const SpotifyPlayer = () => {
             <Row className='justify-content-sm-center'>
                 <DeviceSelector accessToken={spotifyAccessToken}></DeviceSelector>
             </Row>
-            <CurrentTrack accessToken={spotifyAccessToken} artist={artist} track={track}></CurrentTrack>
-            <Seekbar accessToken={spotifyAccessToken} currentProgress={currentProgress} duration={duration} setCurrentProgress={setCurrentProgress}></Seekbar>
+            <Row className='justify-content-sm-center'>
+                <CurrentTrack accessToken={spotifyAccessToken} artist={artist} track={track}></CurrentTrack>
+            </Row>
+            <Row className='justify-content-sm-center'>
+                <Seekbar accessToken={spotifyAccessToken} currentProgress={currentProgress} duration={duration} setCurrentProgress={setCurrentProgress}></Seekbar>
+            </Row>
             <Row className='justify-content-sm-center'>
                 <PlayerCommands accessToken={spotifyAccessToken}></PlayerCommands>
             </Row>
-            <Playlists accessToken={spotifyAccessToken}></Playlists>
+            <Row className='justify-content-sm-center'>
+                <Playlists accessToken={spotifyAccessToken}></Playlists>
+            </Row>
         </Container>
     )
 }

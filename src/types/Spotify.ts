@@ -25,6 +25,31 @@ export interface CurrentTrackProps {
     track: string
 }
 
+export interface TrackProps {
+    accessToken: string,
+    track: ITrack
+}
+
+export interface ITrack {
+    artist: string,
+    name: string,
+    id: string,
+    playlistUri: string,
+    trackNumber: string
+}
+
+export interface PlaylistProps {
+    accessToken: string,
+    name: string,
+    id: string
+}
+
+export interface IPlaylist {
+    name: string,
+    id: string,
+    tracks: Array<ITrack>
+}
+
 export interface SeekbarProps {
     accessToken: string,
     currentProgress: number,
