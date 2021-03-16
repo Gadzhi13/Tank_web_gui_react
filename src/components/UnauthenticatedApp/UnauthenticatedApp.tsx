@@ -8,14 +8,14 @@ import { changePrevRouteId } from '../../actions/changePrevRouteId'
 
 const UnauthenticatedApp = () => {
     const [mounted, setMounted] = useState(false)
-    
+
     const store: Store = useStore()
 
     useEffect(() => {
         setMounted(true)
         store.dispatch(changePrevRouteId(0))
     }, [store]);
-    
+
     return (
         <CSSTransition
             in={mounted}

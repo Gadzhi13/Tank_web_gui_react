@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, FormLabel, FormControl, FormText } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 import { Dispatch } from 'redux'
 import { LocationState, History } from 'history'
 
@@ -29,9 +29,9 @@ const Login = () => {
         }
     }
 
-
     return (
         <div className="login-container">
+        <Redirect to='/login' />
             <div className="p-1 login-form-container">
                 <Form className="form-login" onSubmit={useHandleSubmit}>
                     <FormText className="sign-in-label">Please sign in</FormText>

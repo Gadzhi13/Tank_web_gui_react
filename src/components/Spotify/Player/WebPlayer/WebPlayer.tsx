@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useStore } from 'react-redux'
 import { Store } from 'redux'
-import { useDispatch } from 'react-redux'
-import { Dispatch } from 'redux'
 
 import { SpotifyPlayerCallback, WebPlayerProps, WebPlaybackError, WebPlaybackReady } from '../../../../types/Spotify'
 import ReduxState from '../../../../types/ReduxState'

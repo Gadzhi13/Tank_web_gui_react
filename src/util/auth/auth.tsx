@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux'
-import { signIn } from '../../actions/signIn'
-import { signOut } from '../../actions/signOut'
-import State from '../../types/ReduxState'
 import { Dispatch } from 'redux'
 
+import State from '../../types/ReduxState'
+import { signIn } from '../../actions/signIn'
+import { signOut } from '../../actions/signOut'
 
 export const useSignIn = (username: String, password: String, dispatch: Dispatch): boolean => {
     //ToDo impelent call to backend and cookie injection
     if (username === "admin" && password === "admin") {
         dispatch(signIn())
+        document.cookie = "isSignedIn=true"
         return true
     }
     return false
@@ -17,6 +18,7 @@ export const useSignIn = (username: String, password: String, dispatch: Dispatch
 export const useSignOut = (dispatch: Dispatch): void => {
     //ToDo impelent call to backed and cookie deletion
     dispatch(signOut())
+    document.cookie = "isSignedIn=false"
 }
 
 export const useCheckSignedIn = (): boolean => {
