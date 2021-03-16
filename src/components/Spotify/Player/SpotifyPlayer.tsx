@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Button, ListGroup, Row, Accordion, Card, FormGroup, FormControl } from 'react-bootstrap'
+import { Row, FormGroup, FormControl } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
 import WebPlayer from './WebPlayer/WebPlayer'
 import { spotifyRequestHandler } from '../../../util/spotify/spotifyController'
 import ReduxState from '../../../types/ReduxState'
-import PlayerCommands from './PlayerCommands/PlayerCommands';
-import CurrentTrack from './CurrentTrack/CurrentTrack';
-import DeviceSelector from './DeviceSelector/DeviceSelector';
-import Playlists from './Playlists/Playlists';
+import PlayerCommands from './PlayerCommands/PlayerCommands'
+import CurrentTrack from './CurrentTrack/CurrentTrack'
+import DeviceSelector from './DeviceSelector/DeviceSelector'
+import Playlists from './Playlists/Playlists'
 
 const SpotifyPlayer = () => {
 
