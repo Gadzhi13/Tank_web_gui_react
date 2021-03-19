@@ -10,10 +10,12 @@ import CurrentTrack from './CurrentTrack/CurrentTrack'
 import DeviceSelector from './DeviceSelector/DeviceSelector'
 import Playlists from './Playlists/Playlists'
 import Seekbar from './Seekbar/Seekbar'
+import { CurrentlyPlaying, Track } from '../../../types/Spotify';
 
 const SpotifyPlayer = () => {
 
     const [track, setTrack] = useState<string>('')
+    const [currentTrack, setCurrentTrack] = useState<Track>()
     const [artist, setArtist] = useState<string>('')
     const [currentProgress, setCurrentProgress] = useState<number>(0)
     const [duration, setDuration] = useState<number>(0)
@@ -22,16 +24,18 @@ const SpotifyPlayer = () => {
     useEffect(() => {
         const getCurrentTrack = (): void => {
             if (!spotifyAccessToken) return
-            spotifyRequestHandler(spotifyAccessToken, '/me/player/currently-playing', 'GET')
-                .then((res): void => {
-                    try {
-                        setArtist(res.item.artists[0].name)
-                        setTrack(res.item.name)
-                        setDuration(res.item.duration_ms)
-                        setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
-                    } catch (err) {
-                        console.log(err)
-                    }
+            spotifyRequestHandler(spotifyAccessToken, '/me/player', 'GET')
+                .then((res: CurrentlyPlaying): void => {
+                        try {
+                            const track = (res.item as Track)
+                            setCurrentTrack(track)
+                            setArtist(track.artists[0].name)
+                            setTrack(res.item.name)
+                            setDuration(res.item.duration_ms)
+                            setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
+                        } catch (err) {
+                            console.log(err)
+                        }
                 })
         }
 
@@ -48,7 +52,7 @@ const SpotifyPlayer = () => {
                 <DeviceSelector accessToken={spotifyAccessToken}></DeviceSelector>
             </Row>
             <Row className='justify-content-sm-center'>
-                <CurrentTrack accessToken={spotifyAccessToken} artist={artist} track={track}></CurrentTrack>
+                <CurrentTrack track={currentTrack}></CurrentTrack>
             </Row>
             <Row className='justify-content-sm-center'>
                 <Seekbar accessToken={spotifyAccessToken} currentProgress={currentProgress} duration={duration} setCurrentProgress={setCurrentProgress}></Seekbar>

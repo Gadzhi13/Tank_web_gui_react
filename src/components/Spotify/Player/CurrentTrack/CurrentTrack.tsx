@@ -1,11 +1,11 @@
 import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 import { CurrentTrackProps } from '../../../../types/Spotify'
-import { Alert } from 'react-bootstrap';
 
 const CurrentTrack = (props: CurrentTrackProps) => {
     return (
-        <Alert variant='info'>{props.artist + ' - ' + props.track}</Alert>
+        <Alert variant='info'>{props.track ? props.track.artists[0].name + ' - ' + props.track.name : '-'}</Alert>
     )
 }
 
