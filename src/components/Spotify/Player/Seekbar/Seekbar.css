@@ -1,9 +1,9 @@
 .seekbar::-webkit-slider-thumb {
-    background: #282c34;
+    background: #282c34 !important;
 }
 .seekbar::-webkit-scrollbar-thumb{
-    background: #282c34;
+    background: #282c34 !important;
 }
 .seekbar::-ms-thumb{
-    background: #282c34;
+    background: #282c34 !important;
 }

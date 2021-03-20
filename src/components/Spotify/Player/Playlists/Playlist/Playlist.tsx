@@ -6,7 +6,8 @@ import { spotifyRequestHandler } from '../../../../../util/spotify/spotifyContro
 import Track from './Track/Track'
 
 const Playlist = (props: PlaylistProps) => {
-    const [playlist, setPlaylist] = useState<IPlaylist>() //TODO ADD TYPE
+    const [playlist, setPlaylist] = useState<IPlaylist>()
+    const playlistDummy: string[] = ['', '', '', '', '']
 
     const getPlaylist = (): void => {
         if (!props.accessToken || playlist) return
@@ -28,10 +29,17 @@ const Playlist = (props: PlaylistProps) => {
             <Accordion.Collapse eventKey='1'>
                 <ListGroup>
                     {playlist ? playlist.tracks.items.map((el, index) => {
-                        return (
-                            <Track accessToken={props.accessToken} track={el.track} playlistUri={playlist.uri} trackNumber={index}></Track>
-                        )
-                    }) : null}
+                            return (
+                                <ListGroup.Item key={el.track.id}>
+                                    <Track accessToken={props.accessToken} track={el.track} playlistUri={playlist.uri} trackNumber={index}></Track>
+                                </ListGroup.Item>
+                            )
+                        }) : playlistDummy.map((wl, index) => {
+                            return (
+                            <ListGroup.Item key={index}>Loading</ListGroup.Item>  
+                            )
+                        })
+                    }
                 </ListGroup>
             </Accordion.Collapse>
         </Accordion>

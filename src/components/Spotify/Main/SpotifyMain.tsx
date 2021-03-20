@@ -20,7 +20,7 @@ const SpotifyMain = () => {
     const redirectUrl: string = 'redirect_uri=http://localhost:3000/multimedia&'
     const responseType: string = 'response_type=token&'
     const scope: string = 'scope=user-read-playback-state user-modify-playback-state streaming user-read-email user-read-private&'
-    const showDialog: string = 'show_dialog=true'
+    const showDialog: string = 'show_dialog=false'
 
     const endUrl: string = spotifyUrl + clientId + redirectUrl + responseType + scope + showDialog
 

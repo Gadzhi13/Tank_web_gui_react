@@ -6,7 +6,8 @@ import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../ty
 import Playlist from './Playlist/Playlist'
 
 const Playlists = (props: PlaylistsProps) => {
-    const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>() //TODO ADD TYPE
+    const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>()
+    const playlistsDummy: string[] = ['', '', '', '', '']
 
     const getPlaylists = (): void => {
         if (playlists || !props.accessToken) return
@@ -28,12 +29,19 @@ const Playlists = (props: PlaylistsProps) => {
             <Accordion.Collapse eventKey='0'>
                 <ListGroup>
                     {playlists ? playlists.map(el => {
-                        return (
-                            <ListGroup.Item key={el.name}>
-                                <Playlist accessToken={props.accessToken} playlist={el}></Playlist>
-                            </ListGroup.Item>
-                        )
-                    }) : null}
+                            return (
+                                <ListGroup.Item key={el.name}>
+                                    <Playlist accessToken={props.accessToken} playlist={el}></Playlist>
+                                </ListGroup.Item>
+                            )
+                        }) : playlistsDummy.map((el, index) => {
+                            return (
+                                <ListGroup.Item key={index}>
+                                    Loading
+                                </ListGroup.Item>
+                            )
+                        })
+                    }
                 </ListGroup>
             </Accordion.Collapse>
         </Accordion>
