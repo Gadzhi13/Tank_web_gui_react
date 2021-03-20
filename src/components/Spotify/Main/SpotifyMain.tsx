@@ -30,6 +30,9 @@ const SpotifyMain = () => {
         let a = regExp.exec(window.location.hash.substring(1))
         if (a) {
             store.dispatch(setSpotifyAccessToken(decodeURIComponent(a[2])))
+            setTimeout(() => {
+                store.dispatch(setSpotifyAccessToken(decodeURIComponent('')))
+            }, 3500000)
         }
     }, [spotifyAccessToken, store])
 
