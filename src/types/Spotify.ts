@@ -128,7 +128,7 @@ export interface Track {
 }
 
 export function instanceOfTrack(object: any): object is Track {
-    return 'artists' in object;
+    return 'type' in object
 }
 
 export interface Episode {

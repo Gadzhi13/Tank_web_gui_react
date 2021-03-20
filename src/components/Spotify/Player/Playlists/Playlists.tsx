@@ -7,7 +7,6 @@ import Playlist from './Playlist/Playlist'
 
 const Playlists = (props: PlaylistsProps) => {
     const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>()
-    const playlistsDummy: string[] = ['', '', '', '', '']
 
     const getPlaylists = (): void => {
         if (playlists || !props.accessToken) return
@@ -28,19 +27,16 @@ const Playlists = (props: PlaylistsProps) => {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='0'>
                 <ListGroup>
-                    {playlists ? playlists.map(el => {
+                    {playlists ? playlists.map((el, index) => {
                             return (
-                                <ListGroup.Item key={el.name}>
+                                <ListGroup.Item key={index}>
                                     <Playlist accessToken={props.accessToken} playlist={el}></Playlist>
                                 </ListGroup.Item>
                             )
-                        }) : playlistsDummy.map((el, index) => {
-                            return (
-                                <ListGroup.Item key={index}>
-                                    Loading
-                                </ListGroup.Item>
-                            )
-                        })
+                        }) : 
+                            <ListGroup.Item>
+                                Loading
+                            </ListGroup.Item>
                     }
                 </ListGroup>
             </Accordion.Collapse>

@@ -7,13 +7,13 @@ import Track from './Track/Track'
 
 const Playlist = (props: PlaylistProps) => {
     const [playlist, setPlaylist] = useState<IPlaylist>()
-    const playlistDummy: string[] = ['', '', '', '', '']
 
     const getPlaylist = (): void => {
         if (!props.accessToken || playlist) return
         spotifyRequestHandler(props.accessToken, '/playlists/' + props.playlist.id, 'GET')
             .then((res: IPlaylist) => {
                 try {
+                    console.log(res)
                     setPlaylist(res)
                 } catch (err) {
                     console.log(err)
@@ -30,15 +30,12 @@ const Playlist = (props: PlaylistProps) => {
                 <ListGroup>
                     {playlist ? playlist.tracks.items.map((el, index) => {
                             return (
-                                <ListGroup.Item key={el.track.id}>
+                                <ListGroup.Item key={index}>
                                     <Track accessToken={props.accessToken} track={el.track} playlistUri={playlist.uri} trackNumber={index}></Track>
                                 </ListGroup.Item>
                             )
-                        }) : playlistDummy.map((wl, index) => {
-                            return (
-                            <ListGroup.Item key={index}>Loading</ListGroup.Item>  
-                            )
-                        })
+                        }) :
+                            <ListGroup.Item>Loading</ListGroup.Item>
                     }
                 </ListGroup>
             </Accordion.Collapse>

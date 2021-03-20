@@ -39,6 +39,12 @@ const SpotifyPlayer = () => {
         return () => clearInterval(intervalId)
     }, [spotifyAccessToken])
 
+    if (!spotifyAccessToken) {
+        return (
+            <div>No Spotify token, please reload the page</div>
+        )
+    }
+
     return (
         <Container className='justify-content-sm-center'>
             <WebPlayer accessToken={spotifyAccessToken}></WebPlayer>
