@@ -25,34 +25,19 @@ export interface CurrentTrackProps {
 
 export interface TrackProps {
     accessToken: string
-    track: ITrack
-}
-
-export interface ITrack {
-    artist: string
-    name: string
-    id: string
+    track: Track | Episode
     playlistUri: string
-    trackNumber: string
+    trackNumber: number
 }
 
 export interface PlaylistProps {
     accessToken: string
-    name: string
-    id: string
-}
-
-export interface IPlaylist {
-    name: string
-    id: string
-    tracks: Array<ITrack>
+    playlist: SimplifiedPlaylist
 }
 
 export interface SeekbarProps {
     accessToken: string
-    currentProgress: number
-    duration: number
-    setCurrentProgress: (value: React.SetStateAction<number>) => void
+    currentlyPlaying: CurrentlyPlaying | undefined
 }
 
 export interface DeviceSeldctorProps {
@@ -142,6 +127,10 @@ export interface Track {
     uri: string
 }
 
+export function instanceOfTrack(object: any): object is Track {
+    return 'artists' in object;
+}
+
 export interface Episode {
     audio_preview_url: string
     description: string
@@ -181,4 +170,51 @@ export interface Image {
     height: number
     url: string
     width: number
+}
+
+interface PlaylistBase {
+    collaborative: boolean
+    description: string
+    external_urls: any
+    href: string
+    id: string
+    images: Image[]
+    name: string
+    owner: any
+    public: boolean
+    snapshot_id: string
+    type: string
+    uri: string
+
+}
+
+export interface SimplifiedPlaylist extends PlaylistBase {
+    tracks: PlaylistTracksRef
+}
+
+export interface Playlist extends PlaylistBase {
+    followers: any
+    tracks: PagingObject<PlaylistTrack>
+}
+
+export interface PlaylistTrack {
+    added_at: any
+    added_by: any
+    is_local: boolean
+    track: Track | Episode
+}
+
+export interface PlaylistTracksRef {
+    href: string
+    total: string
+}
+
+export interface PagingObject<T> {
+    href: string
+    items: Array<T>
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
 }

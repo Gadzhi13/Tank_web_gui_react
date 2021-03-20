@@ -27,6 +27,7 @@ const App = () => {
             setIsSignedIn(true)
             dispatch(signIn())
         }
+        // eslint-disable-next-line
     }, [])
 
     return (

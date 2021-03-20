@@ -14,25 +14,19 @@ import { CurrentlyPlaying, Track } from '../../../types/Spotify';
 
 const SpotifyPlayer = () => {
 
-    const [track, setTrack] = useState<string>('')
     const [currentTrack, setCurrentTrack] = useState<Track>()
-    const [artist, setArtist] = useState<string>('')
-    const [currentProgress, setCurrentProgress] = useState<number>(0)
-    const [duration, setDuration] = useState<number>(0)
+    const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlaying>()
     const spotifyAccessToken: string = useSelector((state: ReduxState) => state.spotifyAccessToken)
 
     useEffect(() => {
-        const getCurrentTrack = (): void => {
+        const getCurrentlyPlaying = (): void => {
             if (!spotifyAccessToken) return
             spotifyRequestHandler(spotifyAccessToken, '/me/player', 'GET')
                 .then((res: CurrentlyPlaying): void => {
                         try {
+                            setCurrentlyPlaying(res)
                             const track = (res.item as Track)
                             setCurrentTrack(track)
-                            setArtist(track.artists[0].name)
-                            setTrack(res.item.name)
-                            setDuration(res.item.duration_ms)
-                            setCurrentProgress(res.progress_ms / res.item.duration_ms * 100)
                         } catch (err) {
                             console.log(err)
                         }
@@ -40,7 +34,7 @@ const SpotifyPlayer = () => {
         }
 
         const intervalId = setInterval(() => {
-            getCurrentTrack()
+            getCurrentlyPlaying()
         }, 300)
         return () => clearInterval(intervalId)
     }, [spotifyAccessToken])
@@ -55,7 +49,7 @@ const SpotifyPlayer = () => {
                 <CurrentTrack track={currentTrack}></CurrentTrack>
             </Row>
             <Row className='justify-content-sm-center'>
-                <Seekbar accessToken={spotifyAccessToken} currentProgress={currentProgress} duration={duration} setCurrentProgress={setCurrentProgress}></Seekbar>
+                <Seekbar accessToken={spotifyAccessToken} currentlyPlaying={currentlyPlaying}></Seekbar>
             </Row>
             <Row className='justify-content-sm-center'>
                 <PlayerCommands accessToken={spotifyAccessToken}></PlayerCommands>

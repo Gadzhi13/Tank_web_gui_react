@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import { Accordion, ListGroup, Button } from 'react-bootstrap'
 
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'
-import { PlaylistsProps } from '../../../../types/Spotify'
-import Playlist from './Playlist/Playlist';
+import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../types/Spotify'
+import Playlist from './Playlist/Playlist'
 
 const Playlists = (props: PlaylistsProps) => {
-    const [playlists, setPlaylists] = useState<Array<any>>() //TODO ADD TYPE
+    const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>() //TODO ADD TYPE
 
     const getPlaylists = (): void => {
         if (playlists || !props.accessToken) return
         spotifyRequestHandler(props.accessToken, '/me/playlists', 'GET')
-            .then((res) => {
+            .then((res: PagingObject<SimplifiedPlaylist>) => {
                 try {
                     setPlaylists(res.items)
                 } catch (err) {
@@ -30,7 +30,7 @@ const Playlists = (props: PlaylistsProps) => {
                     {playlists ? playlists.map(el => {
                         return (
                             <ListGroup.Item key={el.name}>
-                                <Playlist accessToken={props.accessToken} name={el.name} id={el.id}></Playlist>
+                                <Playlist accessToken={props.accessToken} playlist={el}></Playlist>
                             </ListGroup.Item>
                         )
                     }) : null}
