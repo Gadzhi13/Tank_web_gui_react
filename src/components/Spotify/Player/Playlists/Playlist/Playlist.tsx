@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, Button, ListGroup } from 'react-bootstrap'
+import { Accordion, Button, ListGroup, useAccordionToggle, Card } from 'react-bootstrap'
 
 import { PlaylistProps, Playlist as IPlaylist } from '../../../../../types/Spotify'
 import { spotifyRequestHandler } from '../../../../../util/spotify/spotifyController'
@@ -7,13 +7,13 @@ import Track from './Track/Track'
 
 const Playlist = (props: PlaylistProps) => {
     const [playlist, setPlaylist] = useState<IPlaylist>()
+    const toggleAcc = useAccordionToggle(props.index.toString(), () => {})
 
     const getPlaylist = (): void => {
         if (!props.accessToken || playlist) return
         spotifyRequestHandler(props.accessToken, '/playlists/' + props.playlist.id, 'GET')
             .then((res: IPlaylist) => {
                 try {
-                    console.log(res)
                     setPlaylist(res)
                 } catch (err) {
                     console.log(err)
@@ -21,11 +21,18 @@ const Playlist = (props: PlaylistProps) => {
             })
     }
 
+    const togglePlaylist = () => {
+        getPlaylist()
+        toggleAcc()
+    }
+
     return (
-        <div>
-            <Accordion.Toggle variant='link' as={Button} eventKey={props.index.toString()} onClick={getPlaylist}>
-                {props.playlist.name}
-            </Accordion.Toggle>
+        <Card>
+            <Card.Header>
+                <Button variant='link' onClick={togglePlaylist}>
+                    {props.playlist.name}
+                </Button>
+            </Card.Header>
             <Accordion.Collapse eventKey={props.index.toString()}>
                 <ListGroup>
                     {playlist ? playlist.tracks.items.map((el, index) => {
@@ -39,7 +46,7 @@ const Playlist = (props: PlaylistProps) => {
                     }
                 </ListGroup>
             </Accordion.Collapse>
-        </div>
+        </Card>
     )
 }
 

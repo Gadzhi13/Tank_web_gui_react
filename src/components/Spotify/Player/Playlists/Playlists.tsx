@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, Button } from 'react-bootstrap'
+import { Accordion, Button, ListGroup } from 'react-bootstrap'
 
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'
 import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../types/Spotify'
@@ -29,11 +29,13 @@ const Playlists = (props: PlaylistsProps) => {
     return (
         <div>
             <Button variant='dark' onClick={togglePlaylists}>Toggle Playlists</Button>
-            {showPlaylists && <Accordion>
-                        {playlists ? playlists.map((el, index) => {
-                            return (<Playlist accessToken={props.accessToken} playlist={el} index={index}></Playlist>)
-                        }) : null}
-            </Accordion>}
+            {showPlaylists &&
+                <Accordion>
+                    {playlists ? playlists.map((el, index) => {
+                        return (<Playlist accessToken={props.accessToken} playlist={el} index={index}></Playlist>)
+                    }) : null}
+                </Accordion>
+            }
         </div>
     )
 }
