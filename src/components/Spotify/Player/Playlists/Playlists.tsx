@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, ListGroup, Button } from 'react-bootstrap'
+import { Accordion, Button } from 'react-bootstrap'
 
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'
 import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../types/Spotify'
@@ -7,9 +7,9 @@ import Playlist from './Playlist/Playlist'
 
 const Playlists = (props: PlaylistsProps) => {
     const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>()
+    const [showPlaylists, setShowPlaylists] = useState<boolean>(false)
 
     const getPlaylists = (): void => {
-        if (playlists || !props.accessToken) return
         spotifyRequestHandler(props.accessToken, '/me/playlists', 'GET')
             .then((res: PagingObject<SimplifiedPlaylist>) => {
                 try {
@@ -20,27 +20,21 @@ const Playlists = (props: PlaylistsProps) => {
             })
     }
 
+    const togglePlaylists = () => {
+        setShowPlaylists(!showPlaylists)
+        if (playlists || !props.accessToken) return
+        getPlaylists()
+    }
+
     return (
-        <Accordion onClick={getPlaylists}>
-            <Accordion.Toggle variant='dark' as={Button} eventKey='0' >
-                Show Playlist
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey='0'>
-                <ListGroup>
-                    {playlists ? playlists.map((el, index) => {
-                            return (
-                                <ListGroup.Item key={index}>
-                                    <Playlist accessToken={props.accessToken} playlist={el}></Playlist>
-                                </ListGroup.Item>
-                            )
-                        }) : 
-                            <ListGroup.Item>
-                                Loading
-                            </ListGroup.Item>
-                    }
-                </ListGroup>
-            </Accordion.Collapse>
-        </Accordion>
+        <div>
+            <Button variant='dark' onClick={togglePlaylists}>Toggle Playlists</Button>
+            {showPlaylists && <Accordion>
+                        {playlists ? playlists.map((el, index) => {
+                            return (<Playlist accessToken={props.accessToken} playlist={el} index={index}></Playlist>)
+                        }) : null}
+            </Accordion>}
+        </div>
     )
 }
 

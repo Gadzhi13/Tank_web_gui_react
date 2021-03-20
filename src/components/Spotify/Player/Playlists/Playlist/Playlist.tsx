@@ -22,24 +22,24 @@ const Playlist = (props: PlaylistProps) => {
     }
 
     return (
-        <Accordion onClick={getPlaylist}>
-            <Accordion.Toggle variant='link' as={Button} eventKey='1'>
+        <div>
+            <Accordion.Toggle variant='link' as={Button} eventKey={props.index.toString()} onClick={getPlaylist}>
                 {props.playlist.name}
             </Accordion.Toggle>
-            <Accordion.Collapse eventKey='1'>
+            <Accordion.Collapse eventKey={props.index.toString()}>
                 <ListGroup>
                     {playlist ? playlist.tracks.items.map((el, index) => {
-                            return (
-                                <ListGroup.Item key={index}>
-                                    <Track accessToken={props.accessToken} track={el.track} playlistUri={playlist.uri} trackNumber={index}></Track>
-                                </ListGroup.Item>
-                            )
-                        }) :
-                            <ListGroup.Item>Loading</ListGroup.Item>
+                        return (
+                            <ListGroup.Item key={index}>
+                                <Track accessToken={props.accessToken} track={el.track} playlistUri={playlist.uri} trackNumber={index}></Track>
+                            </ListGroup.Item>
+                        )
+                    }) :
+                        <ListGroup.Item>Loading</ListGroup.Item>
                     }
                 </ListGroup>
             </Accordion.Collapse>
-        </Accordion>
+        </div>
     )
 }
 

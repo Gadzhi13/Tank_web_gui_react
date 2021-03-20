@@ -33,6 +33,7 @@ export interface TrackProps {
 export interface PlaylistProps {
     accessToken: string
     playlist: SimplifiedPlaylist
+    index: number
 }
 
 export interface SeekbarProps {
