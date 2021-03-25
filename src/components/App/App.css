@@ -36,6 +36,10 @@
     color: #dfefff;
 }
 
+.app-container::-webkit-scrollbar {
+    display: none;
+}
+
 .app-container {
     background-color: #dfefff;
     color: #282c34;
@@ -47,6 +51,8 @@
     font-size: 20px;
     overflow-x: hidden;
     position: relative;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 @keyframes app-logo-spin {
