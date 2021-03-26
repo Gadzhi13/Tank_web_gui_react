@@ -1,0 +1,9 @@
+.playlistTile {
+    color: #282c34;
+}
+
+.playlistTile:hover {
+    background-color: #dfefff;
+    color: #282c34;
+    cursor: pointer;
+}

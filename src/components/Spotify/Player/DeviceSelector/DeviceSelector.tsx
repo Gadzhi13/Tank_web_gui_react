@@ -5,6 +5,8 @@ import { BsTablet } from 'react-icons/bs'
 import { DeviceSeldctorProps } from '../../../../types/Spotify'
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'
 
+import './DeviceSelector.css'
+
 const DeviceSelector = (props: DeviceSeldctorProps) => {
     const [deviceListShown, setDeviceListShown] = useState<boolean>(false)
     const [devices, setDevices] = useState<Array<any>>() //TODO ADD TYPE
@@ -40,11 +42,11 @@ const DeviceSelector = (props: DeviceSeldctorProps) => {
                 onHide={showDevices}
                 placement={props.placement ? props.placement : 'bottom'}
             >
-                <Popover id='popover-basic'>
-                    <Popover.Title as='h3'>Connected Devices</Popover.Title>
-                    <Popover.Content>
-                        <ListGroup>
-                            {devices ? devices.map(el => <ListGroup.Item as='button' key={el.id} onClick={() => changeDevice(el.id)}>{el.name}</ListGroup.Item>) : null}
+                <Popover id='popover-basic' className='devicesHeader'>
+                    <Popover.Title className='devicesHeader'>Connected Devices</Popover.Title>
+                    <Popover.Content className='devicesContent'>
+                        <ListGroup >
+                            {devices ? devices.map(el => <ListGroup.Item className='deviceTile' as='button' key={el.id} onClick={() => changeDevice(el.id)}>{el.name}</ListGroup.Item>) : null}
                         </ListGroup>
                     </Popover.Content>
                 </Popover>

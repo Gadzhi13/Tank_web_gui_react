@@ -5,6 +5,8 @@ import { spotifyRequestHandler } from '../../../../util/spotify/spotifyControlle
 import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../types/Spotify'
 import Playlist from './Playlist/Playlist'
 
+import './Playlists.css'
+
 const Playlists = (props: PlaylistsProps) => {
     const [playlists, setPlaylists] = useState<SimplifiedPlaylist[]>()
 
@@ -27,7 +29,7 @@ const Playlists = (props: PlaylistsProps) => {
     return (
         <Accordion>
             <Card>
-                <Accordion.Toggle as={Card.Header} onClick={togglePlaylists} eventKey='200'>
+                <Accordion.Toggle as={Card.Header} onClick={togglePlaylists} eventKey='200' className='playlistsToggle'>
                         Toggle Playlists
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey='200'>

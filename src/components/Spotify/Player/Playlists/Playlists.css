@@ -1,0 +1,8 @@
+.playlistsToggle {
+    background-color: #282c34;
+    color: white;
+}
+
+.playlistsToggle:hover {
+    cursor: pointer;
+}

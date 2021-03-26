@@ -5,6 +5,8 @@ import { PlaylistProps, Playlist as IPlaylist } from '../../../../../types/Spoti
 import { spotifyRequestHandler } from '../../../../../util/spotify/spotifyController'
 import Track from './Track/Track'
 
+import './Playlist.css'
+
 const Playlist = (props: PlaylistProps) => {
     const [playlist, setPlaylist] = useState<IPlaylist>()
     const toggleAcc = useAccordionToggle(props.index.toString(), () => {})
@@ -27,11 +29,9 @@ const Playlist = (props: PlaylistProps) => {
     }
 
     return (
-        <Card>
-            <Card.Header>
-                <Button variant='link' onClick={togglePlaylist}>
+        <Card className='playlistTile'>
+            <Card.Header onClick={togglePlaylist}>
                     {props.playlist.name}
-                </Button>
             </Card.Header>
             <Accordion.Collapse eventKey={props.index.toString()}>
                 <ListGroup>

@@ -1,0 +1,19 @@
+.devicesHeader {
+    background-color: #282c34 !important;
+    color: white;
+}
+
+.devicesContent {
+    background-color: #dfefff !important;
+    color: #0c5460;
+}
+
+.deviceTile {
+    background-color: #d1ecf1 !important;
+    color: #0c5460;
+}
+
+.deviceTile:hover {
+    background-color: #b6dae0 !important;
+    color: #0c5460;
+}
