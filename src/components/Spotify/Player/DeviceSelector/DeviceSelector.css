@@ -17,3 +17,11 @@
     background-color: #b6dae0 !important;
     color: #0c5460;
 }
+
+.arrow {
+    display: none !important;
+}
+
+.popover-header::before {
+    border-bottom: 0 !important;
+}
