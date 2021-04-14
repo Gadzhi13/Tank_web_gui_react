@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, Card, useAccordionToggle } from 'react-bootstrap'
+import { Accordion, Card } from 'react-bootstrap'
 
 import { spotifyRequestHandler } from '../../../../util/spotify/spotifyController'
 import { PlaylistsProps, PagingObject, SimplifiedPlaylist } from '../../../../types/Spotify'

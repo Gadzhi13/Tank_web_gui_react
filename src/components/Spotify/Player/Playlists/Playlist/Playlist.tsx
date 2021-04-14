@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Accordion, Button, ListGroup, useAccordionToggle, Card } from 'react-bootstrap'
+import { Accordion, ListGroup, useAccordionToggle, Card } from 'react-bootstrap'
 
 import { PlaylistProps, Playlist as IPlaylist } from '../../../../../types/Spotify'
 import { spotifyRequestHandler } from '../../../../../util/spotify/spotifyController'
