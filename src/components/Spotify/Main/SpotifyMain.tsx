@@ -7,8 +7,7 @@ import { IconContext } from 'react-icons'
 import SpotifyPlayer from '../Player/SpotifyPlayer'
 import ReduxState from '../../../types/ReduxState'
 import { setSpotifyAccessToken } from '../../../actions/setSpotifyAccessToken'
-
-//TODO: add alphanumeric check on cleint ID
+import './SpotifyMain.css'
 
 const SpotifyMain = () => {
 
@@ -37,7 +36,7 @@ const SpotifyMain = () => {
     }, [spotifyAccessToken, store])
 
     return (
-        <div>
+        <div className='spotifyContainer'>
             <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
                 {spotifyAccessToken ? <SpotifyPlayer/> : <Button size="lg" variant="dark" href={endUrl}>Connect</Button>}
             </IconContext.Provider>
