@@ -71,7 +71,7 @@ const NavBar = () => {
                         <Link className={location.pathname === '/tank' ? active : inactive} to='/tank' onClick={handleClick}>Tank</Link>
                         <Link className={location.pathname === '/multimedia' ? active : inactive} to='/multimedia' onClick={handleClick}>Multimedia</Link>
                         <Link className={location.pathname === '/settings' ? active : inactive} to='/settings' onClick={handleClick}>Settings</Link>
-                        <Link className={location.pathname === '/' ? active : inactive} to='/' onClick={useHandleSignOut}>Logout</Link>
+                        <Link className={inactive} to='/' onClick={useHandleSignOut}>Logout</Link>
                     </Nav>
                 </Navbar>
             </div>
